@@ -11,7 +11,10 @@ module.exports = function (api) {
             '@/tests': './tests'
           }
         }
-      ]
+      ],
+      ['module:react-native-dotenv', {
+        moduleName: 'react-native-dotenv'
+      }]
     ]
   }
 }

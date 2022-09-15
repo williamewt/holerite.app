@@ -1,21 +1,24 @@
 import React from 'react'
 import { NativeBaseProvider } from 'native-base'
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { RecoilRoot } from 'recoil'
 
-import { MakeLogin } from '@/main/factories/pages/login'
-
-const Stack = createNativeStackNavigator()
+import { setCurrentAccountAdapter, getCurrentAccountAdapter, setAuthorizationAdapter, getAuthorizationAdapter } from '@/main/adapters'
+import { currentAccountState } from '@/application/components'
+import { Routes } from '@/main/routes'
 
 const App: React.FC = () => {
+  const state = {
+    setCurrentAccount: setCurrentAccountAdapter,
+    getCurrentAccount: getCurrentAccountAdapter,
+    setAuthorization: setAuthorizationAdapter,
+    getAuthorization: getAuthorizationAdapter
+  }
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Login" component={MakeLogin} />
-      </Stack.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>
+      <NativeBaseProvider>
+        <Routes />
+      </NativeBaseProvider>
+    </RecoilRoot>
   )
 }
 

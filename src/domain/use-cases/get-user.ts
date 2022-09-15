@@ -1,21 +1,20 @@
 import { HttpResponseError } from '@/domain/entities/errors'
 import { HttpClient, HttpStatusCode } from '@/domain/protocols/http'
+import { AccountModel } from '@/domain/entities/models'
 
 type Setup = (
   url: string,
   httpClient: HttpClient<Output>
-) => Authentication
+) => GetUser
 
-type Input = { cpf: string, password: string }
-type Output = { accessToken: string, refreshToken: string }
+type Output = AccountModel
 
-export type Authentication = (params: Input) => Promise<Output>
+export type GetUser = () => Promise<Output>
 
-export const setupAuthentication: Setup = (url, httpClient) => async params => {
+export const setupGetUser: Setup = (url, httpClient) => async () => {
   const httpResponse = await httpClient.request({
     url,
-    method: 'post',
-    body: params
+    method: 'post'
   })
   if (httpResponse.statusCode === HttpStatusCode.ok) {
     return httpResponse.data

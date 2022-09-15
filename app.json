@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "holerite.app",
-    "slug": "holerite.app",
+    "slug": "holeriteapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
