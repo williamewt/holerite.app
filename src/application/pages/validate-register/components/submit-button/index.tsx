@@ -1,4 +1,4 @@
-import { loginState } from '../atoms'
+import { validateRegisterState } from '../atoms'
 import { SubmitButtonBase } from '@/application/components'
 
 import { useRecoilValue } from 'recoil'
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const SubmitButton: React.FC<Props> = ({ text, isLoadingText, onClick }: Props) => {
-  const state = useRecoilValue(loginState)
+  const state = useRecoilValue(validateRegisterState)
   return (
     <SubmitButtonBase text={text} isLoadingText={isLoadingText} state={state} onClick={onClick} />
   )

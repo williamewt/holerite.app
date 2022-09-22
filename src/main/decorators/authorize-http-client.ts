@@ -25,10 +25,11 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
         DevSettings.reload()
       }
     }
-    if (authorization?.accessToken) {
+    const finalAuthorization = await this.storage.get('authorization')
+    if (finalAuthorization?.accessToken) {
       Object.assign(data, {
         headers: Object.assign(data.headers || {}, {
-          authorization: authorization.accessToken
+          authorization: finalAuthorization.accessToken
         })
       })
     }

@@ -10,7 +10,9 @@ const PrivateRoutes: React.FC = () => {
   return (
     <NavigationContainer>
       <PrivateStack.Navigator>
-        <PrivateStack.Screen name="Main" component={MakeMain} />
+        <PrivateStack.Screen name="Main" options={{ headerShown: false }}>
+          {(props) => <MakeMain props={props} />}
+        </PrivateStack.Screen>
       </PrivateStack.Navigator>
     </NavigationContainer>
   )

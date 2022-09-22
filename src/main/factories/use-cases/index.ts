@@ -1,2 +1,5 @@
 export * from './authentication'
 export * from './get-user'
+export * from './validate-register'
+export * from './register-user-account'
+export * from './sync-data'

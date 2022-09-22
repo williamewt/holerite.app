@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil'
 type ResultType = () => void
 
 export const useLogout = (): ResultType => {
+  console.log('ooi')
   const { setCurrentAccount, setAuthorization } = useRecoilValue(currentAccountState)
   return async (): Promise<void> => {
     await setCurrentAccount(undefined)

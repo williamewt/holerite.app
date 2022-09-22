@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "498194616912",
+    "project_id": "holerite-ultra",
+    "storage_bucket": "holerite-ultra.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498194616912:android:8dd1f90c89dc138396f755",
+        "android_client_info": {
+          "package_name": "com.ultra.holerite.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498194616912-2r6sednb4ov9g8811m3oh3if4isu64r5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJeecNFDkHFYk4LXAntbLNXYTsSTplDNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498194616912-2r6sednb4ov9g8811m3oh3if4isu64r5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

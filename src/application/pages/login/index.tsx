@@ -1,21 +1,24 @@
-import { Box, Center, FormControl, HStack, Input, Link, Text, VStack, Image, Pressable, Icon } from 'native-base'
+import { Box, Center, FormControl, HStack, Input, Link, Text, VStack, Pressable, Icon } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { DevSettings } from 'react-native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 import { Validation } from '@/application/validation/protocols'
 import { Authentication } from '@/domain/use-cases'
 import { FormError, SubmitButton } from './components'
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { loginState } from './components/atoms'
-import { currentAccountState } from '@/application/components'
+import { currentAccountState, CenterLogoWhite } from '@/application/components'
+import { AuthStackParams } from '@/main/routes/auth'
 
 type Props = {
+  navigation: NativeStackNavigationProp<AuthStackParams>
   validation: Validation
   authentication: Authentication
 }
 
-const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
+const Login: React.FC<Props> = ({ navigation, validation, authentication }: Props) => {
   const [showPassword, setShowPassword] = useState(false)
   const resetLoginState = useResetRecoilState(loginState)
   const { setAuthorization } = useRecoilValue(currentAccountState)
@@ -60,9 +63,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   return (
     <Center w="100%" backgroundColor="#F15E2C" h="100%" flex={1}>
       <Box p="2" w="100%" flex={0.3} alignItems="center" justifyContent="center">
-        <Center>
-          <Image source={require('@/assets/logo-white.png')} alt="Logo Grupo Ultra" width={120} height={144} />
-        </Center>
+        <CenterLogoWhite />
       </Box>
       <Box safeArea p="2" py="4" w="100%" flex={0.7} backgroundColor="white" borderTopRadius={20}>
         <VStack space={8} mt="2" alignSelf="center" w="90%" maxW="300">
@@ -78,7 +79,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
               fontSize: 'xs',
               fontWeight: '500',
               color: 'indigo.500'
-            }} alignSelf="flex-end" mt="1">
+            }} alignSelf="flex-end" mt="1" onPress={() => navigation.navigate('ValidateRegister')}>
               Esqueceu a senha?
             </Link>
           </FormControl>
@@ -93,7 +94,7 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
               color: 'indigo.500',
               fontWeight: 'medium',
               fontSize: 'sm'
-            }} href="#">
+            }} onPress={() => navigation.navigate('ValidateRegister')}>
               Cadastrar
             </Link>
           </HStack>
