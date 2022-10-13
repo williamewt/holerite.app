@@ -14,7 +14,11 @@ import { makeAuthorizeHttpClientDecorator } from '@/main/factories/decorators'
 import { AccountModel } from '@/domain/entities/models'
 import { Skeeleton } from './components'
 
+import { PrivateStackParams } from '@/main/routes/private'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
 type Props = {
+  navigation: NativeStackNavigationProp<PrivateStackParams>
   getUser: GetUser
 }
 Notifications.setNotificationHandler({
@@ -25,7 +29,7 @@ Notifications.setNotificationHandler({
   })
 })
 
-const Main: React.FC<Props> = ({ getUser }: Props) => {
+const Main: React.FC<Props> = ({ navigation, getUser }: Props) => {
   const logout = useLogout()
 
   const [user, setUser] = useState<AccountModel>()
@@ -116,7 +120,7 @@ const Main: React.FC<Props> = ({ getUser }: Props) => {
           paddingVertical: 30,
           paddingHorizontal: 20,
           borderRadius: 10
-        }}>
+        }} onPress={() => navigation.navigate('PayStubForm')}>
           <HStack justifyContent="space-between" alignItems='center'>
             <HStack justifyContent="flex-start" alignItems='center' space={5}>
               <Icon as={FontAwesome5} name="file-invoice-dollar" color="#F15E2C" size={35} />
