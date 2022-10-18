@@ -1,6 +1,6 @@
 import { HttpResponseError } from '@/domain/entities/errors'
 import { HttpClient, HttpStatusCode } from '@/domain/protocols/http'
-import { CompanyModel } from '@/domain/entities/models'
+import { CalculationModel, CompanyModel } from '@/domain/entities/models'
 
 type Setup = (
   url: string,
@@ -8,7 +8,7 @@ type Setup = (
 ) => GetCalculationsCompany
 
 type Input = { companyId: string, year: number }
-type Output = CompanyModel
+type Output = CompanyModel & { calculations: CalculationModel[] }
 
 export type GetCalculationsCompany = (params: Input) => Promise<Output>
 

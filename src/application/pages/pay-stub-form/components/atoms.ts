@@ -1,4 +1,4 @@
-import { CompanyModel } from '@/domain/entities/models'
+import { CalculationModel, CompanyModel } from '@/domain/entities/models'
 import { atom } from 'recoil'
 
 export const payStubFormState = atom({
@@ -8,7 +8,7 @@ export const payStubFormState = atom({
     isFormInvalid: true,
     years: [] as number[],
     companies: [] as CompanyModel[],
-    calculations: [],
+    calculations: [] as CalculationModel[],
     companyId: '',
     year: '',
     codCal: '',

@@ -18,7 +18,7 @@ const PrivateRoutes: React.FC = () => {
         <PrivateStack.Screen name="Main" options={{ headerShown: false, title: 'Ínicio' }}>
           {(props) => <MakeMain props={props} />}
         </PrivateStack.Screen>
-        <PrivateStack.Screen name="PayStubForm" options={{ title: 'Meu holerite' }}>
+        <PrivateStack.Screen name="PayStubForm" options={{ title: 'Meu holerite', headerStyle: { backgroundColor: '#F15E2C' }, headerTintColor: 'white' }}>
           {(props) => <MakePayStubForm props={props} />}
         </PrivateStack.Screen>
       </PrivateStack.Navigator>
