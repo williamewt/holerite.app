@@ -33,7 +33,7 @@ const PayStubForm: React.FC<Props> = ({ navigation, validation, getYears, getCom
       try {
         const reponseCompanies = await getCompaniesUser()
         setState(old => ({ ...old, companies: reponseCompanies.companies }))
-      } catch {}
+      } catch { }
       setIsStartingLoading(false)
     })()
   }, [])
@@ -43,7 +43,7 @@ const PayStubForm: React.FC<Props> = ({ navigation, validation, getYears, getCom
         try {
           const reponseCalculations = await getCalculationsCompany({ companyId: state.companyId, year: parseInt(state.year) })
           setState(old => ({ ...old, calculations: reponseCalculations.calculations }))
-        } catch {}
+        } catch { }
       })()
     }
   }, [state.companyId, state.year])
@@ -83,24 +83,11 @@ const PayStubForm: React.FC<Props> = ({ navigation, validation, getYears, getCom
     return calculation + ' - ' + perRef
   }
 
-  const handleSubmit = async (): Promise<void> => {
-    try {
-      if (state.isLoading || state.isFormInvalid) {
-        return
-      }
-      setState(old => ({
-        ...old,
-        mainError: '',
-        isLoading: true
-      }))
-      // enviar para a tela do holerite
-    } catch (error: any) {
-      setState(old => ({
-        ...old,
-        isLoading: false,
-        mainError: error.message
-      }))
+  const handleSubmit = (): void => {
+    if (state.isLoading || state.isFormInvalid) {
+      return
     }
+    navigation.navigate('PayStub', { codCal: state.codCal })
   }
 
   if (isStartingLoading) {

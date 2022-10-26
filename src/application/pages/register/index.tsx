@@ -34,7 +34,6 @@ const Register: React.FC<Props> = ({ navigation, route, validation, registerUser
   const validate = (field: string): void => {
     const { password, passwordConfirmation } = state
     const formData = { password, passwordConfirmation }
-    console.log('--->', field, password, formData)
     setState(old => ({ ...old, [`${field}Error`]: validation.validate(field, formData) }))
     setState(old => ({ ...old, isFormInvalid: !!old.passwordError }))
   }

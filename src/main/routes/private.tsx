@@ -2,11 +2,12 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { MakeMain, MakePayStubForm } from '@/main/factories/pages'
+import { MakeMain, MakePayStubForm, MakePayStub } from '@/main/factories/pages'
 
 export type PrivateStackParams = {
   Main: undefined
   PayStubForm: undefined
+  PayStub: { codCal: string }
 }
 
 const PrivateStack = createNativeStackNavigator<PrivateStackParams>()
@@ -20,6 +21,9 @@ const PrivateRoutes: React.FC = () => {
         </PrivateStack.Screen>
         <PrivateStack.Screen name="PayStubForm" options={{ title: 'Meu holerite', headerStyle: { backgroundColor: '#F15E2C' }, headerTintColor: 'white' }}>
           {(props) => <MakePayStubForm props={props} />}
+        </PrivateStack.Screen>
+        <PrivateStack.Screen name="PayStub" options={{ title: 'Holerite', headerBackTitle: 'Voltar', headerStyle: { backgroundColor: '#F15E2C' }, headerTintColor: 'white' }}>
+          {(props) => <MakePayStub props={props} />}
         </PrivateStack.Screen>
       </PrivateStack.Navigator>
     </NavigationContainer>
