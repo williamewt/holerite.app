@@ -1,6 +1,6 @@
 import { HttpResponseError } from '@/domain/entities/errors'
 import { HttpClient, HttpStatusCode } from '@/domain/protocols/http'
-import { CalculationModel, PayStubEventModel, PayStubHeaderModel, SalaryModel } from '@/domain/entities/models'
+import { PayStubModel } from '@/domain/entities/models'
 
 type Setup = (
   url: string,
@@ -8,7 +8,7 @@ type Setup = (
 ) => GetPayStub
 
 type Input = { codCal: string }
-type Output = { calculation: CalculationModel, header: PayStubHeaderModel, events: PayStubEventModel[], salary: SalaryModel }
+type Output = PayStubModel
 
 export type GetPayStub = (params: Input) => Promise<Output>
 
