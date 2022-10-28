@@ -95,41 +95,43 @@ const PayStubForm: React.FC<Props> = ({ navigation, validation, getYears, getCom
   }
 
   return (
-    <Box safeArea p="2" py="4" w="100%" flex={1} h="100%" backgroundColor="white" borderTopRadius={20}>
-      <VStack space={8} mt="2" alignSelf="center" w="90%" maxW="300">
-        <FormError />
-        <FormControl>
-          <Select selectedValue={state.companyId} minWidth="200" accessibilityLabel="Selecione a empresa" placeholder="Selecione a empresa" size="xl" _selectedItem={{
-            bg: '#F15E2C',
-            endIcon: <CheckIcon size="5" />
-          }} mt={1} onValueChange={companyId => setState({ ...state, companyId })} isDisabled={state.companies.length === 0}>
-            {state.companies.map((company) =>
-              <Select.Item label={`[${company.base}] ${company.company.nomEmp}`} value={String(company.companyId)} key={company.companyId} />
-            )}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <Select selectedValue={state.year} minWidth="200" accessibilityLabel="Selecione o ano" placeholder="Selecione o ano" size="xl" _selectedItem={{
-            bg: '#F15E2C',
-            endIcon: <CheckIcon size="5" color="white" />
-          }} mt={1} onValueChange={year => setState({ ...state, year })} isDisabled={state.years.length === 0}>
-            {state.years.map((year) =>
-              <Select.Item label={String(year)} value={String(year)} key={year} />
-            )}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <Select selectedValue={state.codCal} minWidth="200" accessibilityLabel="Selecione a referência" placeholder="Selecione a referência" size="xl" _selectedItem={{
-            bg: 'teal.600',
-            endIcon: <CheckIcon size="5" />
-          }} mt={1} onValueChange={codCal => setState({ ...state, codCal })} isDisabled={state.calculations.length === 0}>
-            {state.calculations.map((calculation) =>
-              <Select.Item label={labelCalculation(calculation)} value={String(calculation.id)} key={String(calculation.id)} />
-            )}
-          </Select>
-        </FormControl>
-        <SubmitButton text='Buscar' isLoadingText='Buscando...' onClick={handleSubmit} />
-      </VStack>
+    <Box w="100%" h="100%" backgroundColor="#F15E2C">
+      <Box safeArea p="2" py="4" w="100%" flex={1} h="100%" backgroundColor="white" borderTopRadius={20}>
+        <VStack space={8} mt="2" alignSelf="center" w="90%" maxW="300">
+          <FormError />
+          <FormControl>
+            <Select selectedValue={state.companyId} minWidth="200" accessibilityLabel="Selecione a empresa" placeholder="Selecione a empresa" size="xl" _selectedItem={{
+              bg: '#F15E2C',
+              endIcon: <CheckIcon size="5" />
+            }} mt={1} onValueChange={companyId => setState({ ...state, companyId })} isDisabled={state.companies.length === 0}>
+              {state.companies.map((company) =>
+                <Select.Item label={`[${company.base}] ${company.company.nomEmp}`} value={String(company.companyId)} key={company.companyId} />
+              )}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <Select selectedValue={state.year} minWidth="200" accessibilityLabel="Selecione o ano" placeholder="Selecione o ano" size="xl" _selectedItem={{
+              bg: '#F15E2C',
+              endIcon: <CheckIcon size="5" color="white" />
+            }} mt={1} onValueChange={year => setState({ ...state, year })} isDisabled={state.years.length === 0}>
+              {state.years.map((year) =>
+                <Select.Item label={String(year)} value={String(year)} key={year} />
+              )}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <Select selectedValue={state.codCal} minWidth="200" accessibilityLabel="Selecione a referência" placeholder="Selecione a referência" size="xl" _selectedItem={{
+              bg: 'teal.600',
+              endIcon: <CheckIcon size="5" />
+            }} mt={1} onValueChange={codCal => setState({ ...state, codCal })} isDisabled={state.calculations.length === 0}>
+              {state.calculations.map((calculation) =>
+                <Select.Item label={labelCalculation(calculation)} value={String(calculation.id)} key={String(calculation.id)} />
+              )}
+            </Select>
+          </FormControl>
+          <SubmitButton text='Buscar' isLoadingText='Buscando...' onClick={handleSubmit} />
+        </VStack>
+      </Box>
     </Box>
   )
 }
