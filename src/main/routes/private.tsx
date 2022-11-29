@@ -2,12 +2,13 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { MakeMain, MakePayStubForm, MakePayStub } from '@/main/factories/pages'
+import { MakeMain, MakePayStubForm, MakePayStub, MakePdfScreen } from '@/main/factories/pages'
 
 export type PrivateStackParams = {
   Main: undefined
   PayStubForm: undefined
   PayStub: { codCal: string }
+  PdfScreen: { pdfData: object }
 }
 
 const PrivateStack = createNativeStackNavigator<PrivateStackParams>()
@@ -24,6 +25,9 @@ const PrivateRoutes: React.FC = () => {
         </PrivateStack.Screen>
         <PrivateStack.Screen name="PayStub" options={{ title: 'Holerite', headerBackTitle: 'Voltar', headerStyle: { backgroundColor: '#F15E2C' }, headerTintColor: 'white' }}>
           {(props) => <MakePayStub props={props} />}
+        </PrivateStack.Screen>
+        <PrivateStack.Screen name="PdfScreen" options={{ title: '', headerBackTitle: 'Voltar', headerStyle: { backgroundColor: '#F15E2C' }, headerTintColor: 'white' }}>
+          {(props) => <MakePdfScreen props={props} />}
         </PrivateStack.Screen>
       </PrivateStack.Navigator>
     </NavigationContainer>

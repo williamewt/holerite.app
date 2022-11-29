@@ -36,18 +36,15 @@ const PayStub: React.FC<Props> = ({ navigation, route, getPayStub }: Props) => {
 
   useEffect(() => {
     resetPayStub()
-    void (async () => {
-      try {
-        const payStubData = await getPayStub({ codCal })
-        setState(old => ({ ...old, payStubData }))
-        console.log('payStubData', payStubData)
-      } catch { }
-      calculateValues()
+    getPayStub({ codCal }).then(payStubData => {
+      setState(old => ({ ...old, payStubData }))
+      console.log('payStubData', payStubData)
       setIsStartingLoading(false)
-    })()
+    })
+      .catch(e => console.log(e))
   }, [])
 
-  const calculateValues = (): void => {
+  useEffect(() => {
     if (state.payStubData !== null) {
       let earningsV = 0
       let discountsV = 0
@@ -72,27 +69,20 @@ const PayStub: React.FC<Props> = ({ navigation, route, getPayStub }: Props) => {
       setEveEarnings(eveEarningsV)
       setEveDiscounts(eveDiscountsV)
     }
-  }
+  }, [state.payStubData])
 
-  // const handleSubmit = async (): Promise<void> => {
-  //   try {
-  //     if (state.isLoading || state.isFormInvalid) {
-  //       return
-  //     }
-  //     setState(old => ({
-  //       ...old,
-  //       mainError: '',
-  //       isLoading: true
-  //     }))
-  //     // enviar para a tela do holerite
-  //   } catch (error: any) {
-  //     setState(old => ({
-  //       ...old,
-  //       isLoading: false,
-  //       mainError: error.message
-  //     }))
-  //   }
-  // }
+  const viewPdf = (): void => {
+    navigation.navigate('PdfScreen', {
+      pdfData: {
+        data: {
+          content: [
+            'First paragraph',
+            'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
+          ]
+        }
+      }
+    })
+  }
 
   if (isStartingLoading) {
     return <Skeeleton />
@@ -104,7 +94,7 @@ const PayStub: React.FC<Props> = ({ navigation, route, getPayStub }: Props) => {
         <ScrollView>
           <VStack space={6} alignSelf="center" w="90%" maxW="300">
             <Text style={{ fontSize: 18, textAlign: 'center', fontWeight: 'bold' }}>Meu Holerite {state.payStubData ? moment(state.payStubData.calculation.perRef).add(3, 'hours').format('MM/YYYY') : ''}</Text>
-            <Svg width={300} height={250} style={{ marginTop: -40 }}>
+            <Svg style={{ marginTop: -40, width: 300, height: 250 }}>
 
               <VictoryPie
                 theme={VictoryTheme.material}
@@ -123,23 +113,23 @@ const PayStub: React.FC<Props> = ({ navigation, route, getPayStub }: Props) => {
                 <Box alignSelf="center" bg="#05c796" borderRadius={5} padding={2} />
                 <Text>Proventos</Text>
               </HStack>
-              <Text>{earnings.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+              <Text>{earnings.toLocaleString()}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setShowModalDiscounts(true)} style={{ flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 1, paddingHorizontal: 15, paddingVertical: 8, borderColor: '#F5F5F5' }}>
               <HStack space={5}>
                 <Box alignSelf="center" bg="#c43162" borderRadius={5} padding={2} />
                 <Text>Descontos</Text>
               </HStack>
-              <Text>{discounts.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+              <Text>{discounts.toLocaleString('pt-Br', { style: 'currency', currency: 'BRL' })}</Text>
             </TouchableOpacity>
             <HStack justifyContent='space-between' style={{ borderBottomWidth: 1, paddingHorizontal: 15, paddingVertical: 8, borderColor: '#F5F5F5' }}>
               <HStack space={5}>
                 <Box alignSelf="center" bg="#066f99" borderRadius={5} padding={2} />
                 <Text>Líquido</Text>
               </HStack>
-              <Text>{netValue.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+              <Text>{netValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Text>
             </HStack>
-            <Button mt="2" backgroundColor="#F15E2C">
+            <Button mt="2" backgroundColor="#F15E2C" onPress={() => viewPdf()}>
               Ver PDF
             </Button>
           </VStack>
@@ -157,15 +147,15 @@ const PayStub: React.FC<Props> = ({ navigation, route, getPayStub }: Props) => {
                 <Text fontWeight="medium" style={{ flex: 0.3, textAlign: 'right' }}>Vencimentos</Text>
               </HStack>
               {eveEarnings.map(ee =>
-                <HStack alignItems="flex-end" justifyContent="space-between">
+                <HStack alignItems="flex-end" justifyContent="space-between" key={ee.id}>
                   <Text color="blueGray.400" style={{ flex: 0.4 }}>{ee.desEve.length > 15 ? ee.desEve.substring(0, 15) + '...' : ee.desEve}</Text>
                   <Text color="blueGray.400" style={{ flex: 0.3, textAlign: 'right' }}>{ee.refEve > 0 ? ee.refEve : ''}</Text>
-                  <Text color="blueGray.400" style={{ flex: 0.3, textAlign: 'right' }}>{ee.valEve.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+                  <Text color="blueGray.400" style={{ flex: 0.3, textAlign: 'right' }}>{ee.valEve.toLocaleString()}</Text>
                 </HStack>
               )}
               <HStack alignItems="center" justifyContent="space-between">
                 <Text fontWeight="medium">Total</Text>
-                <Text fontWeight="medium">{earnings.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+                <Text fontWeight="medium">{earnings.toLocaleString()}</Text>
               </HStack>
             </VStack>
           </Modal.Body>
@@ -183,15 +173,15 @@ const PayStub: React.FC<Props> = ({ navigation, route, getPayStub }: Props) => {
                 <Text fontWeight="medium" style={{ flex: 0.3, textAlign: 'right' }}>Vencimentos</Text>
               </HStack>
               {eveDiscounts.map(ed =>
-                <HStack alignItems="center" justifyContent="space-between">
+                <HStack alignItems="center" justifyContent="space-between" key={ed.id}>
                   <Text color="blueGray.400" style={{ flex: 0.4 }}>{ed.desEve.length > 15 ? ed.desEve.substring(0, 15) + '...' : ed.desEve}</Text>
                   <Text color="blueGray.400" style={{ flex: 0.3, textAlign: 'right' }}>{ed.refEve > 0 ? ed.refEve : ''}</Text>
-                  <Text color="blueGray.400" style={{ flex: 0.3, textAlign: 'right' }}>{ed.valEve.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+                  <Text color="blueGray.400" style={{ flex: 0.3, textAlign: 'right' }}>{ed.valEve.toLocaleString()}</Text>
                 </HStack>
               )}
               <HStack alignItems="center" justifyContent="space-between">
                 <Text fontWeight="medium">Total</Text>
-                <Text fontWeight="medium">{discounts.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
+                <Text fontWeight="medium">{discounts.toLocaleString()}</Text>
               </HStack>
             </VStack>
           </Modal.Body>
